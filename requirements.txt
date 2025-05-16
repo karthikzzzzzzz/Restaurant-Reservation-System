@@ -1,0 +1,9 @@
+langchain
+langchain-openai
+mcp
+fastapi
+uvicorn
+python-dotenv
+sqlalchemy
+openai
+langfuse

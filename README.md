@@ -123,12 +123,6 @@ Uses SQLAlchemy ORM for handling restaurant and reservation records. SQLite is u
 ## 🧹 Developer Notes
 
 * Ensure Ollama is running and the model is pulled before hitting the API.
-* Slots are currently 90 minutes long per booking by default.
+* Slots are currently 60 minutes long per booking by default.
 * Reservation conflict logic uses time overlap checks.
 
----
-
-## 📬 Contact
-
-Built with 💡 by **Karthik Rajan**
-Have suggestions? Feel free to open an issue or PR!

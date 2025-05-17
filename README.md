@@ -4,6 +4,10 @@ This is an end-to-end AI-powered Restaurant Reservation System built using FastA
 
 ---
 
+## Demo Links
+https://drive.google.com/file/d/1flBexYm6xTDtOInyI5AToe50oidGETTM/view?usp=sharing
+
+
 ## 🚀 Features
 
 * Natural language reservation chatbot

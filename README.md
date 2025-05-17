@@ -1,6 +1,6 @@
 # 🍽️ Restaurant Reservation System
 
-This is an end-to-end AI-powered Restaurant Reservation System built using FastAPI and integrated with Ollama’s `llama3:8b` model. The bot handles reservation requests, checks for available slots, and books tables intelligently based on user preferences.
+This is an end-to-end AI-powered Restaurant Reservation System built using FastAPI and integrated with Ollama’s `llama3.2` model. The bot handles reservation requests, checks for available slots, and books tables intelligently based on user preferences.
 
 ---
 
@@ -57,7 +57,7 @@ Download and install Ollama from: [https://ollama.com](https://ollama.com)
 ### 2. Pull the required model
 
 ```bash
-ollama pull llama3:8b
+ollama pull llama3.2
 ```
 
 Make sure Ollama is running in the background.

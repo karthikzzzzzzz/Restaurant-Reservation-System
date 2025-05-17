@@ -102,15 +102,15 @@ def check_availability(location: str,date_time: str,guests: int,preferences: Opt
 @mcp.tool()
 def make_reservation(user_name: str,user_contact: str,restaurant_name: str,date_time: str,guests: int) -> dict:
     """
-    Books a reservation if availability exists.
-    
+    Books a reservation if the time slot is available for the restaurant.
+
     Args:
         user_name (str): Name of the user making the reservation.
         user_contact (str): Contact number of the user.
         restaurant_name (str): Name of the restaurant.
         date_time (str): Reservation datetime in ISO format.
         guests (int): Number of guests.
-    
+
     Returns:
         dict: {
             "success": bool,
@@ -119,10 +119,9 @@ def make_reservation(user_name: str,user_contact: str,restaurant_name: str,date_
         }
     """
     db = next(get_db())
-    print(f"get_db is callable? {callable(get_db)}")
-
     date_time_obj = datetime.fromisoformat(date_time)
 
+    # Find restaurant
     restaurant = (
         db.query(Restaurant)
         .filter(Restaurant.name.ilike(f"%{restaurant_name}%"))
@@ -137,29 +136,23 @@ def make_reservation(user_name: str,user_contact: str,restaurant_name: str,date_
         }
 
 
-    start_time = date_time_obj - timedelta(hours=1)
-    end_time = date_time_obj + timedelta(hours=1)
-
-    existing_reservations = (
+    existing_reservation = (
         db.query(Reservation)
         .filter(
             Reservation.restaurant_id == restaurant.id,
-            Reservation.reservation_time >= start_time,
-            Reservation.reservation_time <= end_time
+            Reservation.reservation_time == date_time_obj
         )
-        .all()
+        .first()
     )
 
-    total_guests = sum(res.guests for res in existing_reservations)
-
-    if total_guests + guests > restaurant.seating_capacity:
+    if existing_reservation:
         return {
             "success": False,
-            "message": "Selected time slot is full. Please try a different time.",
+            "message": "This time slot is already booked. Please choose a different slot.",
             "reservation_details": None
         }
 
-    
+
     new_reservation = Reservation(
         user_name=user_name,
         user_contact=user_contact,
@@ -167,6 +160,7 @@ def make_reservation(user_name: str,user_contact: str,restaurant_name: str,date_
         reservation_time=date_time_obj,
         guests=guests
     )
+
     db.add(new_reservation)
     db.commit()
     db.refresh(new_reservation)
